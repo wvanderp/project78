@@ -12,16 +12,12 @@ class MotorDriver:
 	self.motorRPin = motorRPin
         GPIO.setup(motorRPin,GPIO.OUT)
         self.motorR = GPIO.PWM(motorRPin,50)
-	self.motorR.start(0)
 
     def drive(self, l, r):
 
-        lpwm = self.intmap(l, 0.0, 100.0, 5.0, 10.0)
-        rpwm = self.intmap(r, 0.0, 100.0, 5.0, 10.0)
+        lpwm = self.intmap(l, 0, 20, 0, 100)
+        rpwm = self.intmap(r, 0, 20, 0, 100)
 
-	lpwm = 15- lpwm
-
-	print type(rpwm)
 	print lpwm
 	print rpwm
 
