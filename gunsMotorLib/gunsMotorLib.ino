@@ -12,49 +12,47 @@ void setup() {
   motorR.attach(motorRight);
 }
 
-void loop() 
-{
+void loop(){
   forward();
 }
 
-void motorLF()
-{
+void motorLF(){
   motorL.write(180);
 }
-void motorLR()
-{
+
+void motorLR(){
   motorL.write(0);
 }
-void motorRF()
-{
+
+void motorRF(){
   motorR.write(0);
 }
-void motorRR()
-{
+
+void motorRR(){
   motorR.write(180);
 }
-void motorIdle()
-{
+
+void motorIdle(){
   motorL.write(90);
   motorR.write(90);
 }
-void forward()
-{
+
+void forward(){
   motorLF();
   motorRF();
 }
-void reverse()
-{
+
+void reverse(){
   motorLR();
   motorRR();
 }
-void left()
-{
+
+void left(){
   motorLR();
   motorRF();
 }
-void right()
-{
+
+void right(){
   motorLF();
   motorRR();
 }
