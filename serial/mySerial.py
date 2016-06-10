@@ -17,6 +17,7 @@ counter = 0
 #	print x
 
 while 1:
-	ser.write("counter is: %d\n"%(counter))
-	sleep(1)
+#	ser.write("counter is: %d\n"%(counter))
+	ser.write("45.1&15:55.2&21")
+	sleep(4)
 	counter += 1
