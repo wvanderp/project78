@@ -4,7 +4,8 @@ int motorRight = 11;
 Servo motorL;
 Servo motorR;
 
-void setup() {
+void setup() 
+{
   // put your setup code here, to run once:
   //pinMode(motorLeft,OUTPUT);
   //pinMode(motorRight,OUTPUT);
@@ -12,48 +13,66 @@ void setup() {
   motorR.attach(motorRight);
 }
 
-void loop(){
-  forward();
+void loop()
+{
+
 }
 
-void motorLF(){
+void motorLF()
+{
   motorL.write(180);
 }
 
-void motorLR(){
+void motorLR()
+{
   motorL.write(0);
 }
 
-void motorRF(){
+void motorRF()
+{
   motorR.write(0);
 }
 
-void motorRR(){
+void motorRR()
+{
   motorR.write(180);
 }
 
-void motorIdle(){
+void motorIdle()
+{
   motorL.write(90);
   motorR.write(90);
 }
-
-void forward(){
-  motorLF();
-  motorRF();
+void forward(int travelTime)
+{
+    motorLF();
+    motorRF();
+    delay(travelTime);
+    motorIdle();
 }
 
-void reverse(){
+void reverse(int travelTime)
+{
   motorLR();
   motorRR();
+  delay(travelTime);
+  motorIdle();
 }
 
-void left(){
+void left(int degree)
+{
   motorLR();
   motorRF();
+  delay(degree * 7);
+  motorIdle();
 }
 
-void right(){
+void right(int degree)
+{
   motorLF();
   motorRR();
+  delay(degree * 7);
+  motorIdle();
 }
+
 
