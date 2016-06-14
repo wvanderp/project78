@@ -12,14 +12,19 @@ ser = serial.Serial(
 )
 
 array = [0] * 180
-for i in range(0, 179):
-    print str(i)+":"+str(array[i])
+
+#for i in range(0, 179):
+#    print str(i)+":"+str(array[i])
 
 while 1:
+    print "new line"
     x = ser.readline()
-    # x = "110:123"
-    (deg, dist) = x.split(":")
-    array[deg-1] = dist
-    print deg + " en " + dist
-
+    if x != "":
+        print x
+        deg, dist = x.split(":", 2)
+        dist = int(dist.rstrip())
+        deg = int(deg)	
+        array[deg-1] = dist
+        print str(deg) + " en " + str(dist)
+ 
 
