@@ -26,5 +26,4 @@ while 1:
         deg = int(deg)	
         array[deg-1] = dist
         print str(deg) + " en " + str(dist)
- 
 

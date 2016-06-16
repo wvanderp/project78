@@ -15,7 +15,12 @@ void setup()
 
 void loop()
 {
-
+  left(90);
+  delay(5000);
+  right(90);
+  delay(5000);
+  forward(2000);
+  delay(5000);
 }
 
 void motorLF()
@@ -43,7 +48,7 @@ void motorIdle()
   motorL.write(90);
   motorR.write(90);
 }
-void forward(int travelTime)
+void reverse(int travelTime)
 {
     motorLF();
     motorRF();
@@ -51,7 +56,7 @@ void forward(int travelTime)
     motorIdle();
 }
 
-void reverse(int travelTime)
+void forward(int travelTime)
 {
   motorLR();
   motorRR();
