@@ -2,32 +2,7 @@
 #include <Servo.h>
 #include <SoftwareSerial.h>
 
-SoftwareSerial mySerial(10, 11); // RX, TX
-
-
-  Serial.println("Goodnight moon!");
-
-  // set the data rate for the SoftwareSerial port
-
-}
-
-void loop() { // run over and over
-  if (mySerial.available()) {
-    Serial.write(mySerial.read());
-  }
-  if (Serial.available()) {
-    mySerial.write(Serial.read());
-  }
-}
-
-
-
-
-
-
-
-
-
+SoftwareSerial mySerial(6, 7); // RX, TX
 
 int trigerPin = 5;
 int echoPin = 6;
@@ -51,16 +26,15 @@ void setup() {
   Serial.print("hallo hard serial");
   
   mySerial.begin(4800);
-  mySerial.println("hallo soft serial");
+//  mySerial.println("hallo soft serial");
 }
 
 void loop(){
   int pingDelay = 50;
 //  check(deg, 50);
   for(int i =0; i <=180;i++){
-    mySerial.print(i);
-    mySerial.print(":");
-    mySerial.println(random(0,110));
+    mySerial.println(String(i) + String(":") + String(random(0,110)));
+    Serial.println(String(i) + String(":") + String(random(0,110)));
     delay(1000);
   }
 }
@@ -69,16 +43,12 @@ void loop(){
 //  move(-90);
 //  for (int i = -90; i < 91; i += stepSize){
 //    move(i + stepSize);
-//    Serial.print((180 / (i + 90)) - 1]);
-//    Serial.print(":");
-//    Serial.println(sensor.ping_cm());
+//    Serial.println((180 / (i + 90)) - 1]) + ":" + sensor.ping_cm());
 //  }
 //  
 //  for (int i = 90; i > -91; i -= stepSize){
 //    move(i - stepSize);
-//    Serial.print((180 / (i + 90)) - 1]);
-//    Serial.print(":");
-//    Serial.println(sensor.ping_cm());
+//    Serial.println((180 / (i + 90)) - 1]) + ":" + sensor.ping_cm());
 //  }
 //}
 //

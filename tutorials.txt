@@ -1,2 +1,2 @@
 rpi serial connection
-
+https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=123081
