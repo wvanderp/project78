@@ -19,7 +19,7 @@ Servo testServo;
 
 int trigerPin = 5;
 int echoPin = 4;
-int maxDistance = 110;
+int maxDistance = 250;
 
 NewPing sensor(trigerPin, echoPin, maxDistance);
 
@@ -242,7 +242,7 @@ void move(int degrees)
 }
 boolean checkIfClearFront()
 {
-  if (((distanceArray[44] > 0) && (distanceArray[44] < 30)) || ((distanceArray[45] > 0) && (distanceArray[45] < 30)) || ((distanceArray[46] > 0) &&(distanceArray[47] < 30)))
+  if (((distanceArray[44] > 0) && (distanceArray[44] < 30)) || ((distanceArray[45] > 0) && (distanceArray[45] < 30)) || ((distanceArray[46] > 0) &&(distanceArray[46] < 30)))
   {
     return false;
   }
@@ -253,9 +253,10 @@ boolean checkIfClearFront()
 }
 double checkClearPath()
 {
-  for (int i = 0; i < 90; i++)
+  int max;
+  for (int i = 0; i < 76; i++)
   {
-    
+    if distanceArray[90-i]
   }
 }
 boolean checkIfObjectGone(int deg)
