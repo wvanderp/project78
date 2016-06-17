@@ -7,6 +7,8 @@ SoftwareSerial mySerial(6, 7); // RX, TX
 int trigerPin = 5;
 int echoPin = 6;
 int maxDistance = 110;
+
+boolean avoidingObject = false;
 NewPing sensor(trigerPin, echoPin, maxDistance);
 
 const int deg = 2;
@@ -39,22 +41,24 @@ void loop(){
   }
 }
 
-//void check(int stepSize, int delayTime){
-//  move(-90);
-//  for (int i = -90; i < 91; i += stepSize){
-//    move(i + stepSize);
-//    Serial.println((180 / (i + 90)) - 1]) + ":" + sensor.ping_cm());
-//  }
-//  
-//  for (int i = 90; i > -91; i -= stepSize){
-//    move(i - stepSize);
-//    Serial.println((180 / (i + 90)) - 1]) + ":" + sensor.ping_cm());
-//  }
-//}
-//
-//void move(int degrees){
-//  if ((degrees >= - 91) && (degrees <= 91))  {
-//    testServo.write(degrees + 90);
-//  }
-//}
+void check(int stepSize, int delayTime){
+  move(-90);
+  for (int i = -90; i < 91; i += stepSize){
+    move(i + stepSize);
+    Serial.println((180 / (i + 90)) - 1]) + ":" + sensor.ping_cm());
+  }
+  
+  for (int i = 90; i > -91; i -= stepSize){
+    move(i - stepSize);
+    Serial.println((180 / (i + 90)) - 1]) + ":" + sensor.ping_cm());
+  }
+}
+
+void move(int degrees){
+  if ((degrees >= - 91) && (degrees <= 91))  {
+    testServo.write(degrees + 90);
+   }
+}
+
+
 

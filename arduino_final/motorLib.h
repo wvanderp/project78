@@ -1,28 +1,3 @@
-#include <Servo.h>
-int motorLeft = 10;
-int motorRight = 11;
-Servo motorL;
-Servo motorR;
-
-void setup() 
-{
-  // put your setup code here, to run once:
-  //pinMode(motorLeft,OUTPUT);
-  //pinMode(motorRight,OUTPUT);
-  motorL.attach(motorLeft);
-  motorR.attach(motorRight);
-}
-
-void loop()
-{
-  left(90);
-  delay(5000);
-  right(90);
-  delay(5000);
-  forward(2000);
-  delay(5000);
-}
-
 void motorLF()
 {
   motorL.write(180);
@@ -48,7 +23,8 @@ void motorIdle()
   motorL.write(90);
   motorR.write(90);
 }
-void reverse(int travelTime)
+
+void forward(int travelTime)
 {
     motorLF();
     motorRF();
@@ -56,7 +32,7 @@ void reverse(int travelTime)
     motorIdle();
 }
 
-void forward(int travelTime)
+void reverse(int travelTime)
 {
   motorLR();
   motorRR();
@@ -64,7 +40,7 @@ void forward(int travelTime)
   motorIdle();
 }
 
-void left(int degree)
+void left(double degree)
 {
   motorLR();
   motorRF();
@@ -72,12 +48,21 @@ void left(int degree)
   motorIdle();
 }
 
-void right(int degree)
+void right(double degree)
 {
   motorLF();
   motorRR();
   delay(degree * 7);
   motorIdle();
 }
-
-
+void turn(double degree)
+{
+  if (degree < 0)
+  {
+    left(-1 * degree);
+  }
+  else if (degree > 0)
+  {
+    right(degree);
+  }
+}
