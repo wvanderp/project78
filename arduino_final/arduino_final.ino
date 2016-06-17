@@ -13,6 +13,7 @@ double lookLeftOrRight(int deg);
 
 double turnAfterDrive;
 TimerObject *driveTimer = new TimerObject(2000);
+TimerObject *QRTimer = new TimerObject(2000);
 
 // Calculate based on max input size expected for one command
 #define INPUT_SIZE 40
@@ -48,6 +49,7 @@ void setup()
   motorR.attach(motorRight);
   testServo.attach(servoPin);
   driveTimer -> setOnTimer(&motorIdle);
+  QRTimer -> setOnTimer(&motorIdle);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
@@ -66,11 +68,13 @@ void loop() { // run over and over
   if (Serial.available()) {
     mySerial.write(Serial.read());
   }*/
- checkEverything();
+ driveTimer->Update();
+ QRTimer -> Update();
+ parseThis();
  objectAvoidance();
 }
 
-void checkEverything()
+void parseThis()
 {
   // Get next command from Serial (add 1 for final 0)
   size = mySerial.readBytes(input, INPUT_SIZE);
@@ -85,7 +89,6 @@ void checkEverything()
       char* separator = strchr(command, '&');
       if (separator != 0)
       {
-          
           // Actually split the string in 2: replace ':' with 0
           *separator = 0;
           double servoId = atof(command);
@@ -110,7 +113,7 @@ void checkEverything()
           timingInd++;
           driveTimer->setOnTimer(*motorIdle);
           turn(servoId);
-          forward(position);
+          forwardQR(position);
       }
       // Find the next command in input string
       command = strtok(0, ":");
@@ -130,6 +133,8 @@ void objectAvoidance()
   break;
   case NoClearPathInFront:
   degree = checkClearPath();
+  motorIdle();
+  QRTimer->Pause();
   turn(-1 * degree);
   avoidState = DrivingToClearPath;
   forward(2000);
@@ -137,20 +142,22 @@ void objectAvoidance()
   case DrivingToClearPath:
   if (checkIfObjectGone(degree) == true)
   {
-     turn(degree);
+     turn(degree*2 - 90);
      avoidState = DrivingParralel;
      driveTimer->setOnTimer(*motorIdle);
-     forward(2000);
+     forwardQR(3000);
   }
   break;
   case DrivingParralel:
   if (checkIfObjectGone(lookLeftOrRight(degree)) == true)
   {
-     turn(degree);
+     turn(degree*2 - 90);
+     QRTimer->Pause();
      driveTimer->setOnTimer(*makeTurnAfterDrive);
      forward(2000);
      turn(-1 * degree);
      avoidState = Driving;
+     forwardQR(3000);
    }
    break;
    }
@@ -191,18 +198,19 @@ boolean checkIfClearFront()
 }
 double checkClearPath()
 {
-  int max = 80;
-  for (int i = 0;i<45;i++)
+  if ((distanceArray[0] >= distanceArray[90]) && (distanceArray[0] != 0) && (distanceArray[90] != 0))
   {
-    if (distanceArray[44-i] > max)
-    {
-      return 44-i;
-    }
-    else if (distanceArray[46+i] > max)
-    {
-      return 46+i ;
-    }
+    return 0;
   }
+  else if ((distanceArray[0] < distanceArray[90]) && (distanceArray[0] != 0) && (distanceArray[90] != 0))
+  {
+    return 90;
+  }
+  else
+  {
+    return 0;
+  }
+  
 }
 boolean checkIfObjectGone(int deg)
 {
@@ -215,11 +223,11 @@ double lookLeftOrRight(int deg)
 {
   if (deg < 45)
   {
-    return 4;
+    return 0;
   }
   else
   {
-    return 86;
+    return 90;
   }
 }
 void motorLF()
@@ -254,6 +262,13 @@ void forward(int travelTime)
     motorRF();
     driveTimer->setInterval(travelTime);
     driveTimer->Start();
+}
+void forwardQR(int travelTime)
+{
+    motorLF();
+    motorRF();
+    QRTimer->setInterval(travelTime);
+    QRTimer->Resume();
 }
 
 void reverse(int travelTime)
