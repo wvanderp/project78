@@ -39,7 +39,7 @@ def scan():
 	pil = Image.open('/home/pi/Desktop/image.jpg').convert('L')
 	width, height = pil.size
 
-	raw = pil.tostring()
+	raw = pil.tobytes()
 #	print('it works1 ')
 	image = zbar.Image(width, height, 'Y800', raw)
 
