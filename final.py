@@ -49,7 +49,7 @@ def scan():
     pil = Image.open('/home/pi/Desktop/image.jpg').convert('L')
     width, height = pil.size
 
-    raw = pil.tostring()
+    raw = pil.tobytes();
     image = zbar.Image(width, height, 'Y800', raw)
 
     scanner.scan(image)
@@ -79,16 +79,16 @@ def scan():
         angle = math.degrees(math.atan(backplain / imageDistance))
 
         return symbol.data, angle
-    return
+    
 
 
 while True:
     # qr code reading
-    angle, data = scan()
+#    angle, data = scan()
 
-    if qrData == data:
+#    if qrData == data:
         # sending qr data over serial
-        ser.write(data)
+#        ser.write(data)
 
     # reading serial connection
     x = ser.readline()
