@@ -71,7 +71,7 @@ void loop() { // run over and over
  driveTimer->Update();
  QRTimer -> Update();
  parseThis();
- objectAvoidanceDemo();
+ //objectAvoidanceDemo();
 }
 
 void parseThis()
