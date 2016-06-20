@@ -142,7 +142,8 @@ void objectAvoidance()
         case DrivingToClearPath:
           if (checkIfObjectGone(degree) == true)
           {
-             //delay
+             motorIdle();
+             delay(500);
              turn(degree*2 - 90);
              avoidState = DrivingParralel;
              driveTimer->setOnTimer(*motorIdle);
@@ -154,11 +155,17 @@ void objectAvoidance()
           {
              turn(degree*2 - 90);
              QRTimer->Pause();
-             driveTimer->setOnTimer(*makeTurnAfterDrive);
-             forward(2000);
-             //delay
+             //driveTimer->setOnTimer(*makeTurnAfterDrive);
+             motorLF();
+             motorRF();
+             delay(2000);
+             motorIdle();
+             motorLF();
+             motorRR();
+             delay(7* degree);
+             motorIdle();
              avoidState = Driving;
-             //forwardQR(3000);
+             forwardQR(3000);
            }
            break;
      }
