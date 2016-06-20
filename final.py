@@ -96,6 +96,7 @@ while True:
     thing, rest = x.split(";")
     if thing == "s":
         if x != "":
+            x = rest
             print x
             deg, dist = x.split(":", 2)
             dist = int(dist.rstrip())
@@ -103,11 +104,6 @@ while True:
             array[deg - 1] = dist
             print str(deg) + " en " + str(dist)
     elif thing == "e":
-        parts = qrData.split(":")
-        for part in parts:
-            numbers = part.split("&")
-            for number in numbers:
-                sum += number
-        if rest != sum:
+        if rest != qrData:
             ser.write(qrData)
     sleep(1)
