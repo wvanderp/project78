@@ -125,42 +125,43 @@ void objectAvoidance()
   check(deg,steps);
   switch(avoidState)
   {
-  case Driving:
-  if (checkIfClearFront() == false)
-  {
-    avoidState = Driving;
-  }
-  break;
-  case NoClearPathInFront:
-  degree = checkClearPath();
-  motorIdle();
-  QRTimer->Pause();
-  turn(-1 * degree);
-  avoidState = DrivingToClearPath;
-  forward(2000);
-  break;
-  case DrivingToClearPath:
-  if (checkIfObjectGone(degree) == true)
-  {
-     turn(degree*2 - 90);
-     avoidState = DrivingParralel;
-     driveTimer->setOnTimer(*motorIdle);
-     forwardQR(3000);
-  }
-  break;
-  case DrivingParralel:
-  if (checkIfObjectGone(lookLeftOrRight(degree)) == true)
-  {
-     turn(degree*2 - 90);
-     QRTimer->Pause();
-     driveTimer->setOnTimer(*makeTurnAfterDrive);
-     forward(2000);
-     turn(-1 * degree);
-     avoidState = Driving;
-     forwardQR(3000);
-   }
-   break;
-   }
+        case Driving:
+          if (checkIfClearFront() == false)
+          {
+            avoidState = NoClearPathInFront;
+          }
+          break;
+        case NoClearPathInFront:
+          degree = checkClearPath();
+          motorIdle();
+          QRTimer->Pause();
+          turn(-1 * degree);
+          avoidState = DrivingToClearPath;
+          forward(2000);
+          break;
+        case DrivingToClearPath:
+          if (checkIfObjectGone(degree) == true)
+          {
+             //delay
+             turn(degree*2 - 90);
+             avoidState = DrivingParralel;
+             driveTimer->setOnTimer(*motorIdle);
+             forwardQR(3000);
+          }
+          break;
+       case DrivingParralel:
+          if (checkIfObjectGone(lookLeftOrRight(degree)) == true)
+          {
+             turn(degree*2 - 90);
+             QRTimer->Pause();
+             driveTimer->setOnTimer(*makeTurnAfterDrive);
+             forward(2000);
+             //delay
+             avoidState = Driving;
+             //forwardQR(3000);
+           }
+           break;
+     }
 }
 void check(int stepSize, int delayTime)
 {
