@@ -3,7 +3,7 @@ import qrcode
 from docx import Document
 from docx.shared import Inches
 
-data = '45&20:-45:10'
+data = '45&15:0&20:-45&15:'
 
 img = qrcode.make(data)
 img.save('qr.jpg')

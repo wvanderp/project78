@@ -38,9 +38,11 @@ distfac = (distance / qrCodeDiag)
 array = [0] * 180
 
 # qr code data
-##############
+# error correction
+##################
 
 qrData = ""
+sum = 0
 
 
 def scan():
@@ -78,8 +80,7 @@ def scan():
 
         angle = math.degrees(math.atan(backplain / imageDistance))
 
-        return symbol.data, angle
-    return
+        return (angle,symbol.data)
 
 
 while True:
@@ -92,12 +93,21 @@ while True:
 
     # reading serial connection
     x = ser.readline()
-    if x != "":
-        print x
-        deg, dist = x.split(":", 2)
-        dist = int(dist.rstrip())
-        deg = int(deg)
-        array[deg - 1] = dist
-        print str(deg) + " en " + str(dist)
-
+    thing, rest = x.split(";")
+    if thing == "s":
+        if x != "":
+            print x
+            deg, dist = x.split(":", 2)
+            dist = int(dist.rstrip())
+            deg = int(deg)
+            array[deg - 1] = dist
+            print str(deg) + " en " + str(dist)
+    elif thing == "e":
+        parts = qrData.split(":")
+        for part in parts:
+            numbers = part.split("&")
+            for number in numbers:
+                sum += number
+        if rest != sum:
+            ser.write(qrData)
     sleep(1)
