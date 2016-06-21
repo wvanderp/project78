@@ -81,22 +81,26 @@ def scan():
         angle = math.degrees(math.atan(backplain / imageDistance))
 
         return (angle,symbol.data)
+    return (0, 0)
 
 
 
 while True:
+    print "begin while statement"
     # qr code reading
-    angle, data = scan()
-
-    if qrData == data:
-        # sending qr data over serial
-        ser.write(data)
+    (angle, data) = scan()
+    print "teken een voto"
+    if data != 0:
+        if qrData != data:
+       	     # sending qr data over serial
+       	     ser.write(data)
 
     # reading serial connection
     x = ser.readline()
-    thing, rest = x.split(";")
-    if thing == "s":
-        if x != "":
+    print "ik lees nu de seriele conn"
+    if x != "":
+        thing, rest = x.split(";",2)
+        if thing == "s":
             x = rest
             print x
             deg, dist = x.split(":", 2)
@@ -104,7 +108,7 @@ while True:
             deg = int(deg)
             array[deg - 1] = dist
             print str(deg) + " en " + str(dist)
-    elif thing == "e":
-        if rest != qrData:
-            ser.write(qrData)
+        elif thing == "e":
+            if rest != qrData:
+                ser.write(qrData)
     sleep(1)
