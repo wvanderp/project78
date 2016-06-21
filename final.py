@@ -87,9 +87,9 @@ while True:
     # qr code reading
     angle, data = scan()
 
-    if qrData == data:
-        # sending qr data over serial
-        ser.write(data)
+    # if qrData == data:
+    # sending qr data over serial
+    ser.write(data)
 
     # reading serial connection
     x = ser.readline()
