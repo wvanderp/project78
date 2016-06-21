@@ -51,7 +51,7 @@ def scan():
     pil = Image.open('/home/pi/Desktop/image.jpg').convert('L')
     width, height = pil.size
 
-    raw = pil.tostring()
+    raw = pil.tobytes();
     image = zbar.Image(width, height, 'Y800', raw)
 
     scanner.scan(image)
@@ -81,6 +81,7 @@ def scan():
         angle = math.degrees(math.atan(backplain / imageDistance))
 
         return (angle,symbol.data)
+
 
 
 while True:
